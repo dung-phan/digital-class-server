@@ -4,32 +4,59 @@ const Batch = require('../batch/model');
 
 const router = new Router();
 
-router.get('/students', (req, res, next) => {
-  Student.findAll()
+//get students for a certain class
+router.get('/batches/:batchId/students', (req, res, next) => {
+  Student.findAll({ where: { batchId: req.params.batchId } })
     .then(students => {
       res.send(students);
     })
     .catch(next);
 });
-
-router.get('/students/:id', (req, res, next) => {
-  Student.findByPk(req.params.id, { include: [Batch] })
+//get a single student of a certain class
+router.get('/batches/:batchId/students/:studentId', (req, res, next) => {
+  Student.findOne({
+    where: {
+      id: req.params.studentId,
+      batchId: req.params.batchId
+    }
+  })
     .then(student => {
-      res.send(student);
+      if (student) {
+        res.send(student);
+      } else {
+        res.status(404).end();
+      }
     })
     .catch(next);
 });
 
 // // Add a new  student
-router.post('/students', (req, res, next) => {
-  Student.create(req.body)
-    .then(student => res.json(student))
+router.post('/batches/:batchId/students', (req, res, next) => {
+  Batch.findByPk(req.params.batchId)
+    .then(batch => {
+      if (!batch) {
+        res.status(404).end();
+      } else {
+        Student.create({
+          ...req.body,
+          batchId: req.params.batchId
+        })
+          .then(() => console.log('what is req.body', req.body))
+          .then(student => {
+            res.json(student);
+          });
+      }
+    })
     .catch(next);
 });
 //edit a student
-
-router.put('/students/:studentId', (req, res, next) => {
-  Student.findByPk(req.params.studentId)
+router.put('/batches/:batchId/students/:studentId', (req, res, next) => {
+  Student.findOne({
+    where: {
+      id: req.params.studentId,
+      batchId: req.params.batchId
+    }
+  })
     .then(student => {
       if (student) {
         student.update(req.body).then(student => res.json(student));
@@ -40,10 +67,11 @@ router.put('/students/:studentId', (req, res, next) => {
     .catch(next);
 });
 // delete a student
-router.delete('/students/:studentId', (req, res, next) => {
+router.delete('/batches/:batchId/students/:studentId', (req, res, next) => {
   Student.destroy({
     where: {
-      id: req.params.studentId
+      id: req.params.studentId,
+      batchId: req.params.batchId
     }
   })
     .then(numDeleted => {

@@ -22,7 +22,7 @@ router.get('/batches/:batchId', (req, res, next) => {
 });
 
 // Create a new class
-router.post('/batches', authMiddleWare, (req, res, next) => {
+router.post('/batches', (req, res, next) => {
   Batch.create(req.body)
     .then(batch => res.json(batch))
     .catch(next);

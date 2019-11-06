@@ -5,10 +5,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const bodyParserMiddleWare = bodyParser.json();
 const corsMiddleWare = cors();
-const authMiddleWare = require('./auth/middleware');
+
 //router
 const batchRouter = require('./batch/router');
 const studentRouter = require('./student/router');
+const evaluationRouter = require('./evaluation/router');
 const userRouter = require('./user/router');
 const authRouter = require('./auth/router');
 
@@ -16,12 +17,13 @@ const authRouter = require('./auth/router');
 
 const Batch = require('./batch/model');
 const Student = require('./student/model');
+const Evaluation = require('./evaluation/model');
 const db = require('./db');
 
 //init
 const app = express();
 const port = process.env.PORT || 4000;
-db.sync()
+db.sync({ force: true })
   .then(() => {
     console.log('Database connected');
     const batchNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -50,6 +52,41 @@ db.sync()
     const studentPromises = students.map(student => Student.create(student));
     return Promise.all(studentPromises);
   })
+  .then(() => {
+    const evaluations = [
+      { studentId: 1, date: '20-10-2019', color: 'green' },
+      { studentId: 1, date: '27-10-2019', color: 'green' },
+      { studentId: 2, date: '20-10-2019', color: 'yellow' },
+      { studentId: 2, date: '27-10-2019', color: 'red' },
+      { studentId: 3, date: '20-10-2019', color: 'green' },
+      { studentId: 3, date: '27-10-2019', color: 'yellow' },
+      { studentId: 4, date: '20-10-2019', color: 'yellow' },
+      { studentId: 4, date: '27-10-2019', color: 'yellow' },
+      { studentId: 5, date: '20-10-2019', color: 'green' },
+      { studentId: 5, date: '27-10-2019', color: 'yellow' },
+      { studentId: 6, date: '20-10-2019', color: 'green' },
+      { studentId: 6, date: '27-10-2019', color: 'green' },
+      { studentId: 7, date: '20-10-2019', color: 'red' },
+      { studentId: 7, date: '27-10-2019', color: 'green' },
+      { studentId: 8, date: '20-10-2019', color: 'red' },
+      { studentId: 8, date: '27-10-2019', color: 'yellow' },
+      { studentId: 9, date: '20-10-2019', color: 'yellow' },
+      { studentId: 9, date: '27-10-2019', color: 'green' },
+      { studentId: 10, date: '20-10-2019', color: 'green' },
+      { studentId: 10, date: '27-10-2019', color: 'yellow' },
+      { studentId: 10, date: '2-11-2019', color: 'red' },
+      { studentId: 1, date: '14-10-2019', color: 'green' },
+      { studentId: 1, date: '09-10-2019', color: 'green' },
+      { studentId: 2, date: '14-10-2019', color: 'green' },
+      { studentId: 2, date: '09-10-2019', color: 'green' },
+      { studentId: 3, date: '14-10-2019', color: 'green' }
+    ];
+
+    const evaluationPromises = evaluations.map(evaluation =>
+      Evaluation.create(evaluation)
+    );
+    return Promise.all(evaluationPromises);
+  })
   .catch(console.error);
 app
   .use(corsMiddleWare)
@@ -58,4 +95,5 @@ app
   .use(authRouter)
   .use(batchRouter)
   .use(studentRouter)
+  .use(evaluationRouter)
   .listen(port, () => console.log('Server runing on port: ', port));
