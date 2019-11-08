@@ -13,7 +13,7 @@ router.get('/batches', (req, res, next) => {
     .catch(next);
 });
 
-router.get('/batches/:batchId', (req, res, next) => {
+router.get('/batches/:batchId', authMiddleWare, (req, res, next) => {
   Batch.findByPk(req.params.batchId, { include: [Student] })
     .then(batch => {
       res.send(batch);
@@ -22,7 +22,7 @@ router.get('/batches/:batchId', (req, res, next) => {
 });
 
 // Create a new class
-router.post('/batches', (req, res, next) => {
+router.post('/batches', authMiddleWare, (req, res, next) => {
   Batch.create(req.body)
     .then(batch => res.json(batch))
     .catch(next);

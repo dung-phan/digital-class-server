@@ -8,12 +8,14 @@ const Batch = db.define('batch', {
     allowNull: false
   },
   startDate: {
-    type: Sequelize.STRING,
-    field: 'Start Date'
+    type: Sequelize.DATEONLY,
+    field: 'Start Date',
+    defaultValue: Sequelize.NOW
   },
   endDate: {
-    type: Sequelize.STRING,
-    field: 'End Date'
+    type: Sequelize.DATEONLY,
+    field: 'End Date',
+    defaultValue: Sequelize.NOW
   }
 });
 

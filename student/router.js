@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const Student = require('./model');
 const Batch = require('../batch/model');
+const authMiddleWare = require('../auth/middleware');
 
 const router = new Router();
 
@@ -31,7 +32,7 @@ router.get('/batches/:batchId/students/:studentId', (req, res, next) => {
 });
 
 // // Add a new  student
-router.post('/batches/:batchId/students', (req, res, next) => {
+router.post('/batches/:batchId/students', authMiddleWare, (req, res, next) => {
   Batch.findByPk(req.params.batchId)
     .then(batch => {
       if (!batch) {
@@ -40,48 +41,54 @@ router.post('/batches/:batchId/students', (req, res, next) => {
         Student.create({
           ...req.body,
           batchId: req.params.batchId
-        })
-          .then(() => console.log('what is req.body', req.body))
-          .then(student => {
-            res.json(student);
-          });
+        }).then(student => {
+          res.json(student);
+        });
       }
     })
     .catch(next);
 });
 //edit a student
-router.put('/batches/:batchId/students/:studentId', (req, res, next) => {
-  Student.findOne({
-    where: {
-      id: req.params.studentId,
-      batchId: req.params.batchId
-    }
-  })
-    .then(student => {
-      if (student) {
-        student.update(req.body).then(student => res.json(student));
-      } else {
-        res.status(404).end();
+router.put(
+  '/batches/:batchId/students/:studentId',
+  authMiddleWare,
+  (req, res, next) => {
+    Student.findOne({
+      where: {
+        id: req.params.studentId,
+        batchId: req.params.batchId
       }
     })
-    .catch(next);
-});
+      .then(student => {
+        if (student) {
+          student.update(req.body).then(student => res.json(student));
+        } else {
+          res.status(404).end();
+        }
+      })
+      .catch(next);
+  }
+);
 // delete a student
-router.delete('/batches/:batchId/students/:studentId', (req, res, next) => {
-  Student.destroy({
-    where: {
-      id: req.params.studentId,
-      batchId: req.params.batchId
-    }
-  })
-    .then(numDeleted => {
-      if (numDeleted) {
-        res.status(204).end();
-      } else {
-        res.status(404).end();
+router.delete(
+  '/batches/:batchId/students/:studentId',
+  authMiddleWare,
+  (req, res, next) => {
+    Student.destroy({
+      where: {
+        id: req.params.studentId,
+        batchId: req.params.batchId
       }
     })
-    .catch(next);
-});
+      .then(numDeleted => {
+        if (numDeleted) {
+          res.status(204).end();
+        } else {
+          res.status(404).end();
+        }
+      })
+      .catch(next);
+  }
+);
 
 module.exports = router;

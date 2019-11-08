@@ -4,12 +4,23 @@ const bcrypt = require('bcrypt');
 
 const router = new Router();
 
-router.post('/users', (req, res, next) => {
-  User.create({
+router.post('/signup', (req, res, next) => {
+  console.log('got a request on /signup');
+  if (!req.body.email || !req.body.password) {
+    res.status(400).send({
+      message: 'Please supply a valid email and password'
+    });
+  }
+  const user = {
     email: req.body.email,
+
     password: bcrypt.hashSync(req.body.password, 10)
-  })
-    .then(() => res.status(201).send({ message: 'User created succesfully' }))
+  };
+
+  User.create(user)
+    .then(user => {
+      res.status(201).send('user created');
+    })
     .catch(next);
 });
 
