@@ -1,12 +1,12 @@
-const { Router } = require('express');
-const Student = require('./model');
-const Batch = require('../batch/model');
-const authMiddleWare = require('../auth/middleware');
+const { Router } = require("express");
+const Student = require("./model");
+const Batch = require("../batch/model");
+const authMiddleWare = require("../auth/middleware");
 
 const router = new Router();
 
 //get students for a certain class
-router.get('/batches/:batchId/students', (req, res, next) => {
+router.get("/batches/:batchId/students", (req, res, next) => {
   Student.findAll({ where: { batchId: req.params.batchId } })
     .then(students => {
       res.send(students);
@@ -14,7 +14,7 @@ router.get('/batches/:batchId/students', (req, res, next) => {
     .catch(next);
 });
 //get a single student of a certain class
-router.get('/batches/:batchId/students/:studentId', (req, res, next) => {
+router.get("/batches/:batchId/students/:studentId", (req, res, next) => {
   Student.findOne({
     where: {
       id: req.params.studentId,
@@ -32,7 +32,7 @@ router.get('/batches/:batchId/students/:studentId', (req, res, next) => {
 });
 
 // // Add a new  student
-router.post('/batches/:batchId/students', authMiddleWare, (req, res, next) => {
+router.post("/batches/:batchId/students", (req, res, next) => {
   Batch.findByPk(req.params.batchId)
     .then(batch => {
       if (!batch) {
@@ -50,7 +50,7 @@ router.post('/batches/:batchId/students', authMiddleWare, (req, res, next) => {
 });
 //edit a student
 router.put(
-  '/batches/:batchId/students/:studentId',
+  "/batches/:batchId/students/:studentId",
   authMiddleWare,
   (req, res, next) => {
     Student.findOne({
@@ -71,7 +71,7 @@ router.put(
 );
 // delete a student
 router.delete(
-  '/batches/:batchId/students/:studentId',
+  "/batches/:batchId/students/:studentId",
   authMiddleWare,
   (req, res, next) => {
     Student.destroy({
