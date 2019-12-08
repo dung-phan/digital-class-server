@@ -1,10 +1,12 @@
 {
-  "name": "ticket-app-server",
+  "name": "digital-class-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index",
+    "dev": "nodemon index"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +16,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.1",
     "pg": "^7.12.1",
     "sequelize": "^5.21.2"
   }

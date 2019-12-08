@@ -1,14 +1,13 @@
-const { Router } = require('express');
-const User = require('./model');
-const bcrypt = require('bcrypt');
+const { Router } = require("express");
+const User = require("./model");
+const bcrypt = require("bcrypt");
 
 const router = new Router();
 
-router.post('/signup', (req, res, next) => {
-  console.log('got a request on /signup');
+router.post("/signup", (req, res, next) => {
   if (!req.body.email || !req.body.password) {
     res.status(400).send({
-      message: 'Please supply a valid email and password'
+      message: "Please supply a valid email and password"
     });
   }
   const user = {
@@ -19,7 +18,7 @@ router.post('/signup', (req, res, next) => {
 
   User.create(user)
     .then(user => {
-      res.status(201).send('user created');
+      res.status(201).send("user created");
     })
     .catch(next);
 });
