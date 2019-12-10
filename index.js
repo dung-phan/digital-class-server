@@ -55,7 +55,7 @@ db.sync()
         name: "Daenerys Targaryen",
         batchId: 4,
         photo:
-          "https://upload.wikimedia.org/wikipedia/en/thumb/0/0d/Daenerys_Targaryen_with_Dragon-Emilia_Clarke.jpg/220px-Daenerys_Targaryen_with_Dragon-Emilia_Clarke.jpg"
+          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs-media-cache-ak0.pinimg.com%2F736x%2F46%2Fdc%2F52%2F46dc527a545ce51e4101d5825771f630.jpg&f=1&nofb=1"
       },
       {
         name: "Jorah Mormont",

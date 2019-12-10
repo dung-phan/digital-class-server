@@ -49,46 +49,38 @@ router.post("/batches/:batchId/students", (req, res, next) => {
     .catch(next);
 });
 //edit a student
-router.put(
-  "/batches/:batchId/students/:studentId",
-  authMiddleWare,
-  (req, res, next) => {
-    Student.findOne({
-      where: {
-        id: req.params.studentId,
-        batchId: req.params.batchId
+router.put("/batches/:batchId/students/:studentId", (req, res, next) => {
+  Student.findOne({
+    where: {
+      id: req.params.studentId,
+      batchId: req.params.batchId
+    }
+  })
+    .then(student => {
+      if (student) {
+        student.update(req.body).then(student => res.json(student));
+      } else {
+        res.status(404).end();
       }
     })
-      .then(student => {
-        if (student) {
-          student.update(req.body).then(student => res.json(student));
-        } else {
-          res.status(404).end();
-        }
-      })
-      .catch(next);
-  }
-);
+    .catch(next);
+});
 // delete a student
-router.delete(
-  "/batches/:batchId/students/:studentId",
-  authMiddleWare,
-  (req, res, next) => {
-    Student.destroy({
-      where: {
-        id: req.params.studentId,
-        batchId: req.params.batchId
+router.delete("/batches/:batchId/students/:studentId", (req, res, next) => {
+  Student.destroy({
+    where: {
+      id: req.params.studentId,
+      batchId: req.params.batchId
+    }
+  })
+    .then(numDeleted => {
+      if (numDeleted) {
+        res.status(204).end();
+      } else {
+        res.status(404).end();
       }
     })
-      .then(numDeleted => {
-        if (numDeleted) {
-          res.status(204).end();
-        } else {
-          res.status(404).end();
-        }
-      })
-      .catch(next);
-  }
-);
+    .catch(next);
+});
 
 module.exports = router;
