@@ -13,7 +13,7 @@ router.get("/batches", (req, res, next) => {
     .catch(next);
 });
 
-router.get("/batches/:batchId", authMiddleWare, (req, res, next) => {
+router.get("/batches/:batchId", (req, res, next) => {
   Batch.findByPk(req.params.batchId, { include: [Student] })
     .then(batch => {
       res.send(batch);
