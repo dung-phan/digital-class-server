@@ -17,13 +17,12 @@ const authRouter = require("./auth/router");
 
 const Batch = require("./batch/model");
 const Student = require("./student/model");
-const Evaluation = require("./evaluation/model");
 const db = require("./db");
 
 //init
 const app = express();
 const port = process.env.PORT || 4000;
-db.sync({ force: true })
+db.sync()
   .then(() => {
     console.log("Database connected");
     const batchNumbers = [1, 2, 3, 4, 5, 6];
@@ -134,29 +133,6 @@ db.sync({ force: true })
 
     const studentPromises = students.map(student => Student.create(student));
     return Promise.all(studentPromises);
-  })
-  .then(() => {
-    // const evaluations = [
-    //   { studentId: 1, batchId: 1, date: "20-10-2019", color: "green" },
-    //   { studentId: 1, batchId: 1, date: "27-10-2019", color: "green" },
-    //   { studentId: 2, batchId: 2, date: "20-10-2019", color: "yellow" },
-    //   { studentId: 2, batchId: 2, date: "27-10-2019", color: "red" },
-    //   { studentId: 3, batchId: 1, date: "20-10-2019", color: "green" },
-    //   { studentId: 3, batchId: 1, date: "27-10-2019", color: "yellow" },
-    //   { studentId: 4, batchId: 2, date: "20-10-2019", color: "yellow" },
-    //   { studentId: 4, batchId: 2, date: "20-10-2019", color: "yellow" },
-    //   { studentId: 4, batchId: 2, date: "27-10-2019", color: "yellow" },
-    //   { studentId: 5, batchId: 2, date: "20-10-2019", color: "green" },
-    //   { studentId: 5, batchId: 2, date: "27-10-2019", color: "yellow" },
-    //   { studentId: 6, batchId: 2, date: "20-10-2019", color: "green" },
-    //   { studentId: 6, batchId: 2, date: "27-10-2019", color: "green" },
-    //   { studentId: 7, batchId: 1, date: "20-10-2019", color: "red" },
-    //   { studentId: 7, batchId: 1, date: "27-10-2019", color: "green" }
-    // ];
-    // const evaluationPromises = evaluations.map(evaluation =>
-    //   Evaluation.create(evaluation)
-    // );
-    // return Promise.all(evaluationPromises);
   })
   .catch(console.error);
 app
