@@ -17,14 +17,14 @@ const authRouter = require("./auth/router");
 
 const Batch = require("./batch/model");
 const Student = require("./student/model");
+const Evaluation = require("./evaluation/model");
 const db = require("./db");
 
 //init
 const app = express();
 const port = process.env.PORT || 4000;
-db.sync()
+db.sync({ force: true })
   .then(() => {
-    console.log("Database connected");
     const batchNumbers = [1, 2, 3, 4, 5, 6];
     const batches = batchNumbers.map(batchNumber =>
       Batch.create({ batchNumber: batchNumber })
@@ -133,6 +133,191 @@ db.sync()
 
     const studentPromises = students.map(student => Student.create(student));
     return Promise.all(studentPromises);
+  })
+  .then(() => {
+    const evaluations = [
+      [
+        {
+          date: "2019-12-07",
+          color: "green",
+          remark: "Clean code, able to finish required tasks",
+          studentId: 1,
+          batchId: 1
+        },
+        {
+          date: "2019-12-26",
+          color: "yellow",
+          remark: "Need to try more",
+          studentId: 1,
+          batchId: 1
+        },
+        {
+          date: "2019-12-07",
+          color: "red",
+          remark: "Failed to run basic tasks",
+          studentId: 5,
+          batchId: 1
+        },
+        {
+          date: "2019-12-22",
+          color: "yellow",
+          remark: "Need to try more",
+          studentId: 8,
+          batchId: 1
+        },
+        {
+          date: "2019-12-26",
+          color: "green",
+          remark: "Very good",
+          studentId: 12,
+          batchId: 1
+        },
+        {
+          date: "2020-01-02",
+          color: "yellow",
+          remark: "Need to try more",
+          studentId: 5,
+          batchId: 1
+        },
+        {
+          date: "2019-12-02",
+          color: "yellow",
+          remark: "Need to try more",
+          studentId: 5,
+          batchId: 1
+        },
+        {
+          date: "2019-12-20",
+          color: "red",
+          remark: "Failed to run basic tasks",
+          studentId: 8,
+          batchId: 1
+        },
+        {
+          date: "2019-12-12",
+          color: "yellow",
+          remark: "Need to try more",
+          studentId: 8,
+          batchId: 1
+        },
+        {
+          date: "2019-12-12",
+          color: "green",
+          remark: "Excellent!",
+          studentId: 12,
+          batchId: 1
+        },
+        {
+          date: "2019-12-01",
+          color: "red",
+          remark: "Failed to run basic tasks",
+          studentId: 8,
+          batchId: 1
+        },
+        {
+          date: "2019-12-31",
+          color: "red",
+          remark: "Failed to run basic tasks",
+          studentId: 8,
+          batchId: 1
+        },
+        {
+          date: "2019-12-19",
+          color: "yellow",
+          remark: "Need to try more",
+          studentId: 2,
+          batchId: 2
+        },
+        {
+          date: "2019-12-11",
+          color: "green",
+          remark: "Excellent!",
+          studentId: 7,
+          batchId: 2
+        },
+        {
+          date: "2019-12-15",
+          color: "yellow",
+          remark: "Not sure",
+          studentId: 9,
+          batchId: 2
+        },
+        {
+          date: "2019-12-19",
+          color: "green",
+          remark: "He knows what he's doing!",
+          studentId: 13,
+          batchId: 2
+        },
+        {
+          date: "2019-12-21",
+          color: "red",
+          remark: "Failed to run basic tasks",
+          studentId: 2,
+          batchId: 2
+        },
+        {
+          date: "2019-12-06",
+          color: "green",
+          remark: "Excellent!",
+          studentId: 3,
+          batchId: 3
+        },
+        {
+          date: "2019-12-13",
+          color: "green",
+          remark: "Very good",
+          studentId: 6,
+          batchId: 3
+        },
+        {
+          date: "2019-12-21",
+          color: "yellow",
+          remark: "Need to try more",
+          studentId: 14,
+          batchId: 3
+        },
+        {
+          date: "2019-12-18",
+          color: "red",
+          remark: "Dead!",
+          studentId: 15,
+          batchId: 3
+        },
+        {
+          date: "2019-12-27",
+          color: "green",
+          remark: "Very good",
+          studentId: 4,
+          batchId: 4
+        },
+        {
+          date: "2019-12-14",
+          color: "green",
+          remark: "Excellent!",
+          studentId: 10,
+          batchId: 4
+        },
+        {
+          date: "2019-12-15",
+          color: "red",
+          remark: "Need to try more",
+          studentId: 11,
+          batchId: 4
+        },
+        {
+          date: "2019-12-07",
+          color: "yellow",
+          remark: "Need to try more",
+          studentId: 16,
+          batchId: 4
+        }
+      ]
+    ];
+    const evaluationPromises = evaluations.map(evaluation =>
+      Evaluation.create(evaluation)
+    );
+    return Promise.all(evaluationPromises);
   })
   .catch(console.error);
 app
