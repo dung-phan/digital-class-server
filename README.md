@@ -11,8 +11,6 @@ This repository is the version control system of the backend version of the Digi
 This project uses Express server and Sequelize ORM.
 It has been deployed on [Heroku](https://digitalclass-server.herokuapp.com/).
 
-Link to the front-end version [here](https://github.com/dung-phan/digital-class-frontend)
-
 ## Features Overview
 
 With this RESTful API, a user can:
@@ -41,7 +39,9 @@ To connect to the Database on a Mac you can use [Postico](https://eggerapps.at/p
    $ node . or nodemon .
    ```
 
-3. Set up the front-end. The repo including instructions can be found [here](https://github.com/dung-phan/digital-class-frontend).
+3. Set up the front-end.
+
+The repo including instructions can be found [here](https://github.com/dung-phan/digital-class-frontend).
 
 ## Authentication
 
