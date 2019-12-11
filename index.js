@@ -23,14 +23,8 @@ const db = require("./db");
 //init
 const app = express();
 const port = process.env.PORT || 4000;
-db.sync({ force: true })
-  .then(() => {
-    const batchNumbers = [1, 2, 3, 4, 5, 6];
-    const batches = batchNumbers.map(batchNumber =>
-      Batch.create({ batchNumber: batchNumber })
-    );
-    return Promise.all(batches);
-  })
+db.sync()
+
   // .then(() => {
   //   const students = [
   //     {
