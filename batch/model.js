@@ -1,20 +1,20 @@
-const Sequelize = require('sequelize');
-const db = require('../db');
+const Sequelize = require("sequelize");
+const db = require("../db");
 
-const Batch = db.define('batch', {
+const Batch = db.define("batch", {
   batchNumber: {
     type: Sequelize.STRING,
-    field: 'Batch Number',
+    field: "Batch Number",
     allowNull: false
   },
   startDate: {
     type: Sequelize.DATEONLY,
-    field: 'Start Date',
+    field: "Start Date",
     defaultValue: Sequelize.NOW
   },
   endDate: {
     type: Sequelize.DATEONLY,
-    field: 'End Date',
+    field: "End Date",
     defaultValue: Sequelize.NOW
   }
 });
