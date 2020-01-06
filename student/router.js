@@ -59,6 +59,7 @@ router.put("/batches/:batchId/students/:studentId", (req, res, next) => {
     .then(student => {
       if (student) {
         student.update(req.body).then(student => res.json(student));
+        console.log("what is req", req.body);
       } else {
         res.status(404).end();
       }

@@ -1,6 +1,6 @@
 const express = require("express");
 
-//midlewares
+//middlewares
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const bodyParserMiddleWare = bodyParser.json();

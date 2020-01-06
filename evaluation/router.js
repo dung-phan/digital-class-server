@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const Evaluation = require("./model");
 const Student = require("../student/model");
+const authMiddleWare = require("../auth/middleware");
+
 const router = new Router();
 //get evaluations of a student in a certain class
 router.get(
@@ -25,6 +27,7 @@ router.get("/batches/:batchId/evaluations", (req, res, next) => {
     })
     .catch(next);
 });
+
 //post an evaluation to a student
 router.post(
   "/batches/:batchId/students/:studentId/evaluations",
