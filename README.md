@@ -3,7 +3,6 @@
 - Introduction
 - Features Overview
 - Installation
-- Authentication
 
 # Introduction
 
@@ -16,9 +15,9 @@ It has been deployed on [Heroku](https://digitalclass-server.herokuapp.com/).
 With this RESTful API, a user can:
 
 - Retrieve a list of classes, students and their evaluations
-- Add classes and new students in a class.
+- Add and delete classes.
 - Add evaluations to students
-- Edit and remove students from a class
+- Add, edit and remove students from a class
 
 ## Installation
 
@@ -42,7 +41,3 @@ To connect to the Database on a Mac you can use [Postico](https://eggerapps.at/p
 3. Set up the front-end.
 
 The repo including instructions can be found [here](https://github.com/dung-phan/digital-class-frontend).
-
-## Authentication
-
-Codes for authentication are all available in the repo but not implemented for the purpose of demonstration.
