@@ -44,7 +44,8 @@ router.put("/batches/:batchId", authMiddleWare, (req, res, next) => {
     .catch(next);
 });
 //Delete a batch
-router.delete("/batches/:id", (req, res, next) => {
+router.delete("/batches/:id", authMiddleWare, (req, res, next) => {
+  console.log("check this", authMiddleWare);
   Batch.destroy({
     where: {
       id: req.params.id

@@ -1,16 +1,16 @@
-const User = require('../user/model');
-const { toData } = require('./jwt');
+const User = require("../user/model");
+const { toData } = require("./jwt");
 
 function authMiddleWare(req, res, next) {
   const auth =
-    req.headers.authorization && req.headers.authorization.split(' ');
-
-  if (auth && auth[0] === 'Bearer' && auth[1]) {
+    req.headers.authorization && req.headers.authorization.split(" ");
+  console.log("check auth", auth);
+  if (auth && auth[0] === "Bearer" && auth[1]) {
     try {
       const data = toData(auth[1]);
       User.findByPk(data.userId)
         .then(user => {
-          if (!user) return next('User does not exist');
+          if (!user) return next("User does not exist");
 
           req.user = user;
           next();
@@ -23,7 +23,7 @@ function authMiddleWare(req, res, next) {
     }
   } else {
     res.status(401).send({
-      message: 'Please supply some valid credentials'
+      message: "Please supply some valid credentials"
     });
   }
 }
